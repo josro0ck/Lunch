@@ -10,7 +10,8 @@ import androidx.fragment.app.FragmentActivity
 import java.util.*
 
 
-class EditTextDatePicker(private val _context: FragmentActivity?, editTextViewID: EditText) : View.OnClickListener, OnDateSetListener {
+class EditTextDatePicker(private val _context: FragmentActivity?, editTextViewID: EditText) : View.OnClickListener,
+    OnDateSetListener {
     internal var _editText: EditText
     private var _day: Int = 0
     private var _month: Int = 0
@@ -46,8 +47,7 @@ class EditTextDatePicker(private val _context: FragmentActivity?, editTextViewID
 
         _editText.setText(
             StringBuilder()
-                // Month is 0 based so add 1
-                .append(_day).append("/").append(_month + 1).append("/").append(_birthYear).append(" ")
+                .append(_month + 1).append("/").append(_day).append("/").append(_birthYear).append(" ")
         )
     }
 }
