@@ -44,4 +44,8 @@ data class Ingredient(
             return arrayOfNulls(size)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
 }

@@ -68,13 +68,6 @@ class AddIngredientActivity : AppCompatActivity() {
     }
 
     private fun setAdapters() {
-//        ingredientName.setAdapter(
-//            ArrayAdapter<String>(
-//                activity,
-//                android.R.layout.simple_dropdown_item_1line,
-//                Catalog.myCatalog
-//            )
-//        )
         rationaleSpinner.setAdapter(
             ArrayAdapter<RatioScale>(
                 this@AddIngredientActivity,
