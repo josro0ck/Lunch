@@ -10,19 +10,19 @@ import com.josro0ck.lunch.room.LunchRepository
 import kotlinx.coroutines.launch
 
 // Class extends AndroidViewModel and requires application as a parameter.
-class IngredientModel(application: Application) : AndroidViewModel(application) {
+class IngredientViewModel(application: Application) : AndroidViewModel(application) {
 
     // The ViewModel maintains a reference to the repository to get data.
     private val repository: LunchRepository
     // LiveData gives us updated words when they change.
-    val allWords: LiveData<List<Ingredient>>
+    val allIngredients: LiveData<List<Ingredient>>
 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
         // the correct WordRepository.
-        val wordsDao = LunchDatabase.getDatabase(application).ingredientDao()
+        val wordsDao = LunchDatabase.getDatabase(application, viewModelScope).ingredientDao()
         repository = LunchRepository(wordsDao)
-        allWords = repository.allWords
+        allIngredients = repository.allWords
     }
 
     /**

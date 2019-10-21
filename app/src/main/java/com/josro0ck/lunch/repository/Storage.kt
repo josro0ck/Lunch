@@ -23,7 +23,6 @@ class Storage {
                 "Jalapeño Pepper"
                 , fourDaysBack
                 , 3
-                , 2f
                 , RatioScale.LBS
             )
         )
@@ -32,7 +31,6 @@ class Storage {
                 "Vegetable Oil"
                 , fiveDaysBack
                 , 60
-                , 2f
                 , RatioScale.LBS
             )
         )
@@ -41,7 +39,6 @@ class Storage {
                 "Salt"
                 , hundredDaysBack
                 , -1
-                , 2f
                 , RatioScale.LBS
             )
         )

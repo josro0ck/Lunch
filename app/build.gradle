@@ -10,7 +10,7 @@ android {
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.josro0ck.lunch"
-        minSdkVersion 19
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
