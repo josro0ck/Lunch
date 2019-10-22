@@ -4,6 +4,7 @@ package com.josro0ck.lunch.activity
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
@@ -28,6 +29,10 @@ class MainActivityTest {
 
     @Test
     fun mainActivityTest() {
+
+        val idlingRes = mActivityTestRule.activity.getIdlingRes()
+        IdlingRegistry.getInstance().register(idlingRes)
+
         val textView = onView(
             allOf(
                 withId(R.id.ingredientName), withText("All purpose Flour"),
@@ -42,6 +47,9 @@ class MainActivityTest {
             )
         )
         textView.check(matches(withText("All purpose Flour")))
+
+
+        IdlingRegistry.getInstance().unregister(idlingRes)
     }
 
     private fun childAtPosition(

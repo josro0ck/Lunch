@@ -8,18 +8,26 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.josro0ck.lunch.R
+import androidx.test.espresso.IdlingResource
 import com.josro0ck.lunch.adapter.IngredientListAdapter
 import com.josro0ck.lunch.model.Ingredient
 import com.josro0ck.lunch.viewModel.IngredientViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import com.josro0ck.lunch.R
+import com.josro0ck.lunch.espresso.RecyclerIdlingResource
+import com.josro0ck.lunch.recycler.NotifyingLinearLayoutManager
+
+
+
 
 private const val NEW_INGREDIENT = 1
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
+
+    private val mIdlingRes = RecyclerIdlingResource()
+
     private lateinit var ingredientViewModel: IngredientViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +38,16 @@ class MainActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
         val adapter = IngredientListAdapter(this)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        mIdlingRes.setIdleState(false)
+        val layoutManager = NotifyingLinearLayoutManager(this)
+        layoutManager.mCallback = object : NotifyingLinearLayoutManager.OnLayoutCompleteCallback {
+            override fun onLayoutComplete() {
+                // here we know that the view has been updated.
+                // now you can execute your code here
+                mIdlingRes.setIdleState(true)
+            }
+        }
+        recyclerView.layoutManager = layoutManager
         //ViewModelInit
         ingredientViewModel = ViewModelProvider(this).get(IngredientViewModel::class.java)
         ingredientViewModel.allIngredients.observe(this, Observer {
@@ -60,5 +77,10 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+
+    fun getIdlingRes(): IdlingResource {
+        return mIdlingRes
     }
 }
