@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -17,14 +18,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.josro0ck.lunch.R
 import com.josro0ck.lunch.espresso.RecyclerIdlingResource
 import com.josro0ck.lunch.recycler.NotifyingLinearLayoutManager
-
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
 private const val NEW_INGREDIENT = 1
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity(override val coroutineContext: CoroutineContext = Dispatchers.Main) : AppCompatActivity(), CoroutineScope {
 
     private val mIdlingRes = RecyclerIdlingResource()
 
@@ -44,7 +48,14 @@ class MainActivity : AppCompatActivity() {
             override fun onLayoutComplete() {
                 // here we know that the view has been updated.
                 // now you can execute your code here
-                mIdlingRes.setIdleState(true)
+
+
+                launch {
+                    //TODO: use RxJava Debounce
+                    delay(400)  //debounce timeOut
+                    mIdlingRes.setIdleState(true)
+                    // do our magic here
+                }
             }
         }
         recyclerView.layoutManager = layoutManager
